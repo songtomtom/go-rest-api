@@ -1,9 +1,8 @@
-package model
+package app
 
 import (
-	"fmt"
+	"songtomtom/rest_api/app/model"
 	"songtomtom/rest_api/config"
-	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -15,9 +14,6 @@ func Migration() *gorm.DB {
 	if err != nil {
 		panic("DB connect error.")
 	}
-	db.AutoMigrate(&User{})
-	user := User{Name: "Jinzhu", Age: 18, Birthday: time.Now()}
-	db.Create(&user)
-	fmt.Println(user)
+	db.AutoMigrate(&model.User{})
 	return db
 }
