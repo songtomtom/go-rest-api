@@ -1,10 +1,11 @@
 package app
 
 import (
-	"songtomtom/rest_api/app/model"
-	"songtomtom/rest_api/config"
+	"fmt"
+	"net/http"
 
-	"gorm.io/driver/mysql"
+	"songtomtom/rest_api/app/model"
+
 	"gorm.io/gorm"
 )
 
@@ -13,11 +14,12 @@ type App struct {
 }
 
 func (app *App) Init() {
+	app.DB = model.Migration()
+}
 
-	dsn := config.GetDSN()
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic("Db 연결에 실패하였습니다.")
-	}
-	model.Migration(db)
+func (app *App) Run(port int) {
+	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
+		rw.Write([]byte("hello"))
+	})
+	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
