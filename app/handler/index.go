@@ -5,27 +5,27 @@ import (
 	"net/http"
 )
 
-func index() func(rw http.ResponseWriter, r *http.Request) {
-	return func(rw http.ResponseWriter, r *http.Request) {
-		rw.WriteHeader(http.StatusOK)
-		rw.Write([]byte("Hello"))
+func Index() func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Hello"))
 	}
 }
 
-func responseSuccess(payload interface{}) func(rw http.ResponseWriter, r *http.Request) {
-	return func(rw http.ResponseWriter, r *http.Request) {
+func responseSuccess(payload interface{}) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		res, err := json.Marshal(payload)
 		if err != nil {
 			responseError(err)
 		}
-		rw.WriteHeader(http.StatusOK)
-		rw.Write([]byte(res))
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(res))
 	}
 }
 
-func responseError(err error) func(rw http.ResponseWriter, r *http.Request) {
-	return func(rw http.ResponseWriter, r *http.Request) {
-		rw.WriteHeader(http.StatusInternalServerError)
-		rw.Write([]byte(err.Error()))
+func responseError(err error) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
 	}
 }
