@@ -3,9 +3,11 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
+
+	"gorm.io/gorm"
 )
 
-func Index() func(http.ResponseWriter, *http.Request) {
+func Index(_ *gorm.DB, _ http.ResponseWriter, _ *http.Request) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("Hello"))
