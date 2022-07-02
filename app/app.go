@@ -22,7 +22,9 @@ type ResponseHandlerFunc func(db *gorm.DB, w http.ResponseWriter, r *http.Reques
 func (app *App) Run(port int) {
 	app.Migration()
 	app.Configuration()
+	fmt.Println("Server Start")
 	http.ListenAndServe(fmt.Sprintf(":%d", port), app.routes)
+
 }
 
 func (app *App) Migration() {
